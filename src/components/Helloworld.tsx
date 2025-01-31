@@ -1,12 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import { ElectricityData } from "../models/electricity";
+import { Box, Typography } from "@mui/material";
 
 const fetchHelloWorld = async () => {
-  const response = await fetch("https://swapi.dev/api/people/1/");
+  // TODO error boundary
+  const response: Response = await fetch("http://localhost:3000/api/stats");
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
-  return response.json();
+  const data: ElectricityData[] = await response.json();
+  return data;
 };
 
 const Helloworld: React.FC = () => {
@@ -17,12 +21,19 @@ const Helloworld: React.FC = () => {
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
+  if (data === undefined) return <div>data is undefined</div>;
 
   return (
-    <div>
-      <h1>Hello World</h1>
-      <p>{data.name}</p>
-    </div>
+    <Box>
+      {data.map((element: ElectricityData) => {
+        return (
+          <Box key={element.id}>
+            <Typography>helo</Typography>
+            <Typography>{element.id}</Typography>
+          </Box>
+        );
+      })}
+    </Box>
   );
 };
 
