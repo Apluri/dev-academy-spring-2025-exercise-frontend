@@ -6,3 +6,12 @@ export type ElectricityData = {
   consumptionamount?: number;
   hourlyprice?: number;
 };
+
+export type MetaData = {
+  totalRowCount: number;
+};
+
+export type ElectricityDataResponse = {
+  data: ElectricityData[];
+  meta: MetaData;
+};

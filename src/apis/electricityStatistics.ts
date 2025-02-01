@@ -1,4 +1,15 @@
-import { ElectricityData } from "../models/electricity";
+import {
+  MRT_ColumnFiltersState,
+  MRT_PaginationState,
+  MRT_SortingState,
+} from "material-react-table";
+import {
+  ElectricityData,
+  ElectricityDataResponse as ElectricityDataDTO,
+} from "../models/electricity";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+
+export const BASE_URL = "http://localhost:3000/";
 
 /**
  * Handles the conversion of date strings to Date objects
@@ -17,13 +28,45 @@ const initDateValues = (
   });
 };
 
-export const getElectricityData = async () => {
-  // TODO error boundary
-  const response: Response = await fetch("http://localhost:3000/api/stats");
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
-  }
-  const data: ElectricityData[] = await response.json();
-  const convertedData = initDateValues(data);
-  return convertedData;
+export const useGetElectricityData = (
+  columnFilters: MRT_ColumnFiltersState,
+  globalFilter: string,
+  pagination: MRT_PaginationState,
+  sorting: MRT_SortingState
+) => {
+  return useQuery({
+    queryKey: [
+      "electricityData",
+      { columnFilters, globalFilters: globalFilter, pagination, sorting },
+    ],
+    queryFn: async () => {
+      const fetchURL = new URL("/api/stats", BASE_URL);
+
+      fetchURL.searchParams.set(
+        "start",
+        `${pagination.pageIndex * pagination.pageSize}`
+      );
+      fetchURL.searchParams.set("size", `${pagination.pageSize}`);
+      fetchURL.searchParams.set("filters", JSON.stringify(columnFilters ?? []));
+      fetchURL.searchParams.set("globalFilter", globalFilter ?? "");
+      fetchURL.searchParams.set("sorting", JSON.stringify(sorting ?? []));
+
+      try {
+        const response = await fetch(fetchURL.href);
+        const json: ElectricityDataDTO = await response.json();
+        console.log(json.data);
+        const convertedData: ElectricityDataDTO = {
+          data: initDateValues(json.data),
+          meta: json.meta,
+        };
+
+        return convertedData;
+      } catch (error) {
+        console.error(error);
+        throw new Error("Failed to fetch electricity data");
+      }
+    },
+    initialData: { data: [], meta: { totalRowCount: 0 } },
+    placeholderData: keepPreviousData, //don't go to 0 rows when refetching or paginating to next page
+  });
 };
