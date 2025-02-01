@@ -26,14 +26,13 @@ const StatisticsList = ({}: Props) => {
   });
 
   const {
-    data: { data, meta },
+    data: { data, meta } = { data: [], meta: { totalRowCount: 0 } },
     isError,
     isRefetching,
     isLoading,
     error,
   } = useGetElectricityData(columnFilters, globalFilter, pagination, sorting);
 
-  console.log(columnFilters);
   const columns = useMemo<MRT_ColumnDef<ElectricityData>[]>(
     () => [
       {
@@ -98,13 +97,9 @@ const StatisticsList = ({}: Props) => {
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
     muiToolbarAlertBannerProps: isError
-      ? { color: "error", children: "Error loading data" } // TODO check it works
+      ? { color: "error", children: "Error loading data: " + error.message }
       : undefined,
   });
-  console.log(error);
-
-  if (isLoading) return <Box>Loading...</Box>;
-  if (isError) return <Box>Error</Box>; // TODO: better error handling
 
   return (
     <Box>

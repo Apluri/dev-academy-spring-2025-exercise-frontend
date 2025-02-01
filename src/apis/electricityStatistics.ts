@@ -34,19 +34,19 @@ export const useGetElectricityData = (
   pagination: MRT_PaginationState,
   sorting: MRT_SortingState
 ) => {
-  return useQuery({
+  return useQuery<ElectricityDataDTO>({
     queryKey: [
       "electricityData",
       { columnFilters, globalFilters: globalFilter, pagination, sorting },
     ],
     queryFn: async () => {
-      const fetchURL = new URL("/api/stats", BASE_URL);
+      const fetchURL = new URL("/api/statistics/raw", BASE_URL);
 
       fetchURL.searchParams.set(
-        "start",
+        "pageStart",
         `${pagination.pageIndex * pagination.pageSize}`
       );
-      fetchURL.searchParams.set("size", `${pagination.pageSize}`);
+      fetchURL.searchParams.set("pageSize", `${pagination.pageSize}`);
       fetchURL.searchParams.set("filters", JSON.stringify(columnFilters ?? []));
       fetchURL.searchParams.set("globalFilter", globalFilter ?? "");
       fetchURL.searchParams.set("sorting", JSON.stringify(sorting ?? []));
@@ -60,7 +60,6 @@ export const useGetElectricityData = (
 
       return convertedData;
     },
-    initialData: { data: [], meta: { totalRowCount: 0 } },
     placeholderData: keepPreviousData, //don't go to 0 rows when refetching or paginating to next page
   });
 };
