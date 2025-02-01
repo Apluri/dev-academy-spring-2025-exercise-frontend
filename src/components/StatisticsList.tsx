@@ -33,37 +33,36 @@ const StatisticsList = ({}: Props) => {
     error,
   } = useGetElectricityData(columnFilters, globalFilter, pagination, sorting);
 
+  console.log(columnFilters);
   const columns = useMemo<MRT_ColumnDef<ElectricityData>[]>(
     () => [
       {
         header: "id",
         accessorKey: "id",
-      },
-      {
-        header: "Date",
-        accessorKey: "date",
-        Cell: ({ cell }) => {
-          return cell.getValue<Date | undefined>()?.toLocaleDateString();
-        },
+        filterVariant: "range",
       },
       {
         header: "Start Time",
         accessorKey: "starttime",
+        filterVariant: "datetime-range",
         Cell: ({ cell }) => {
-          return cell.getValue<Date | undefined>()?.toLocaleTimeString();
+          return cell.getValue<Date | undefined>()?.toLocaleString();
         },
       },
       {
         header: "Production Amount",
         accessorKey: "productionamount",
+        filterVariant: "range",
       },
       {
         header: "Consumption Amount",
         accessorKey: "consumptionamount",
+        filterVariant: "range",
       },
       {
         header: "Hourly Price",
         accessorKey: "hourlyprice",
+        filterVariant: "range",
       },
     ],
     []
