@@ -51,20 +51,14 @@ export const useGetElectricityData = (
       fetchURL.searchParams.set("globalFilter", globalFilter ?? "");
       fetchURL.searchParams.set("sorting", JSON.stringify(sorting ?? []));
 
-      try {
-        const response = await fetch(fetchURL.href);
-        const json: ElectricityDataDTO = await response.json();
-        console.log(json.data);
-        const convertedData: ElectricityDataDTO = {
-          data: initDateValues(json.data),
-          meta: json.meta,
-        };
+      const response = await fetch(fetchURL.href);
+      const json: ElectricityDataDTO = await response.json();
+      const convertedData: ElectricityDataDTO = {
+        data: initDateValues(json.data),
+        meta: json.meta,
+      };
 
-        return convertedData;
-      } catch (error) {
-        console.error(error);
-        throw new Error("Failed to fetch electricity data");
-      }
+      return convertedData;
     },
     initialData: { data: [], meta: { totalRowCount: 0 } },
     placeholderData: keepPreviousData, //don't go to 0 rows when refetching or paginating to next page

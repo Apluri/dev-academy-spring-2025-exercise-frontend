@@ -14,10 +14,6 @@ import { useGetElectricityData } from "../apis/electricityStatistics";
 type Props = {};
 
 const StatisticsList = ({}: Props) => {
-  const [paginationMode, setPaginationMode] = useState<
-    "infinite" | "pagination"
-  >("pagination");
-
   //manage our own state for stuff we want to pass to the API
   const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>(
     []
@@ -77,7 +73,6 @@ const StatisticsList = ({}: Props) => {
     columns: columns,
     data: data,
     enableRowVirtualization: true,
-    enablePagination: paginationMode === "pagination",
     manualFiltering: true, //turn off built-in client-side filtering
     manualPagination: true, //turn off built-in client-side pagination
     manualSorting: true, //turn off built-in client-side sorting
@@ -104,7 +99,7 @@ const StatisticsList = ({}: Props) => {
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
     muiToolbarAlertBannerProps: isError
-      ? { color: "error", children: "Error loading data" }
+      ? { color: "error", children: "Error loading data" } // TODO check it works
       : undefined,
   });
   console.log(error);
@@ -112,19 +107,8 @@ const StatisticsList = ({}: Props) => {
   if (isLoading) return <Box>Loading...</Box>;
   if (isError) return <Box>Error</Box>; // TODO: better error handling
 
-  const handlePagniationModeChange = () => {
-    if (paginationMode === "infinite") {
-      setPaginationMode("pagination");
-    } else {
-      setPaginationMode("infinite");
-    }
-  };
-
   return (
     <Box>
-      <Button onClick={handlePagniationModeChange}>
-        Change pagination mode
-      </Button>
       <MaterialReactTable table={table} />
     </Box>
   );
