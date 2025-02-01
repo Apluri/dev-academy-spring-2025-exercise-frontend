@@ -1,12 +1,13 @@
 import { Box, Typography } from "@mui/material";
 import StatisticsList from "../components/StatisticsList";
 import { useQuery } from "@tanstack/react-query";
-import { fetchHelloWorld } from "../apis/electricityStatistics";
+import { getElectricityData } from "../apis/electricityStatistics";
 
 const LandingPage = () => {
   const { data, error, isLoading } = useQuery({
     queryKey: ["helloWorld"],
-    queryFn: fetchHelloWorld,
+    queryFn: getElectricityData,
+    initialData: [],
   });
   return (
     <Box>
