@@ -30,15 +30,11 @@ const initDateValues = (
 
 export const useGetElectricityData = (
   columnFilters: MRT_ColumnFiltersState,
-  globalFilter: string,
   pagination: MRT_PaginationState,
   sorting: MRT_SortingState
 ) => {
   return useQuery<ElectricityDataDTO>({
-    queryKey: [
-      "electricityData",
-      { columnFilters, globalFilters: globalFilter, pagination, sorting },
-    ],
+    queryKey: ["electricityData", { columnFilters, pagination, sorting }],
     queryFn: async () => {
       const fetchURL = new URL("/api/statistics/raw", BASE_URL);
 
@@ -48,7 +44,6 @@ export const useGetElectricityData = (
       );
       fetchURL.searchParams.set("pageSize", `${pagination.pageSize}`);
       fetchURL.searchParams.set("filters", JSON.stringify(columnFilters ?? []));
-      fetchURL.searchParams.set("globalFilter", globalFilter ?? "");
       fetchURL.searchParams.set("sorting", JSON.stringify(sorting ?? []));
 
       const response = await fetch(fetchURL.href);
