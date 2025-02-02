@@ -12,7 +12,7 @@ import { useMemo, useState } from "react";
 import { useGetElectricityData } from "../apis/electricityStatistics";
 type Props = {};
 
-const StatisticsList = ({}: Props) => {
+const ListRaw = ({}: Props) => {
   //manage our own state for stuff we want to pass to the API
   const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>(
     []
@@ -99,4 +99,4 @@ const StatisticsList = ({}: Props) => {
   );
 };
 
-export default StatisticsList;
+export default ListRaw;

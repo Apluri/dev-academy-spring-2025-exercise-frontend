@@ -11,7 +11,20 @@ export type MetaData = {
   totalRowCount: number;
 };
 
-export type ElectricityDataResponse = {
+export type ElectricityDataDTO = {
   data: ElectricityData[];
   meta: MetaData;
+};
+
+export type DailyElectricityDataDTO = {
+  data: DailyElectricityData[];
+  meta: MetaData;
+};
+
+export type DailyElectricityData = {
+  date: Date;
+  totalConsumption: number;
+  totalProduction: number;
+  averagePrice: number;
+  longestNegativePriceStreak: number;
 };
