@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { ElectricityData } from "../models/electricity";
 import {
   MaterialReactTable,
@@ -10,7 +10,6 @@ import {
 } from "material-react-table";
 import { useMemo, useState } from "react";
 import { useGetElectricityData } from "../apis/electricityStatistics";
-
 type Props = {};
 
 const StatisticsList = ({}: Props) => {
@@ -18,7 +17,6 @@ const StatisticsList = ({}: Props) => {
   const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>(
     []
   );
-  const [globalFilter, setGlobalFilter] = useState("");
   const [sorting, setSorting] = useState<MRT_SortingState>([]);
   const [pagination, setPagination] = useState<MRT_PaginationState>({
     pageIndex: 0,
@@ -26,44 +24,42 @@ const StatisticsList = ({}: Props) => {
   });
 
   const {
-    data: { data, meta },
+    data: { data, meta } = { data: [], meta: { totalRowCount: 0 } },
     isError,
     isRefetching,
     isLoading,
     error,
-  } = useGetElectricityData(columnFilters, globalFilter, pagination, sorting);
+  } = useGetElectricityData(columnFilters, pagination, sorting);
 
   const columns = useMemo<MRT_ColumnDef<ElectricityData>[]>(
     () => [
       {
         header: "id",
         accessorKey: "id",
-      },
-      {
-        header: "Date",
-        accessorKey: "date",
-        Cell: ({ cell }) => {
-          return cell.getValue<Date | undefined>()?.toLocaleDateString();
-        },
+        filterVariant: "range",
       },
       {
         header: "Start Time",
         accessorKey: "starttime",
+        filterVariant: "datetime-range",
         Cell: ({ cell }) => {
-          return cell.getValue<Date | undefined>()?.toLocaleTimeString();
+          return cell.getValue<Date | undefined>()?.toLocaleString();
         },
       },
       {
         header: "Production Amount",
         accessorKey: "productionamount",
+        filterVariant: "range",
       },
       {
         header: "Consumption Amount",
         accessorKey: "consumptionamount",
+        filterVariant: "range",
       },
       {
         header: "Hourly Price",
         accessorKey: "hourlyprice",
+        filterVariant: "range",
       },
     ],
     []
@@ -72,21 +68,15 @@ const StatisticsList = ({}: Props) => {
   const table = useMaterialReactTable({
     columns: columns,
     data: data,
-    enableRowVirtualization: true,
+    enableGlobalFilter: false, //turn off built-in global filtering
     manualFiltering: true, //turn off built-in client-side filtering
     manualPagination: true, //turn off built-in client-side pagination
     manualSorting: true, //turn off built-in client-side sorting
-    muiTableBodyProps: {
-      sx: {
-        maxHeight: "50vh",
-      },
-    },
     initialState: {
       showColumnFilters: true,
     },
     state: {
       columnFilters,
-      globalFilter,
       pagination,
       sorting,
       isLoading,
@@ -94,18 +84,13 @@ const StatisticsList = ({}: Props) => {
       showProgressBars: isRefetching,
     },
     rowCount: meta.totalRowCount,
-    onGlobalFilterChange: setGlobalFilter,
     onColumnFiltersChange: setColumnFilters,
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
     muiToolbarAlertBannerProps: isError
-      ? { color: "error", children: "Error loading data" } // TODO check it works
+      ? { color: "error", children: "Error loading data: " + error.message }
       : undefined,
   });
-  console.log(error);
-
-  if (isLoading) return <Box>Loading...</Box>;
-  if (isError) return <Box>Error</Box>; // TODO: better error handling
 
   return (
     <Box>
