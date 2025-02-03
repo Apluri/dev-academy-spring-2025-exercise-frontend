@@ -30,10 +30,10 @@ export const useGetDailyElectricityData = (
 
       const response = await fetch(fetchURL.href);
       const json = await response.json();
-      const convertedData: DailyElectricityData =
+      const parsedData: DailyElectricityData =
         DailyElectricityDataSchema.parse(json);
 
-      return convertedData;
+      return parsedData;
     },
     placeholderData: keepPreviousData, //don't go to 0 rows when refetching or paginating to next page
   });

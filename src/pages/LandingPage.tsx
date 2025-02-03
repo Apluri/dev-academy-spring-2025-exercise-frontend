@@ -1,12 +1,14 @@
-import { Box, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import DailyStatisticsList from "../components/DailyStatisticsList";
 
 const LandingPage = () => {
   return (
-    <Box>
-      <Typography variant="h1">Daily electricity Statistics</Typography>
+    <Container maxWidth="xl" disableGutters>
+      <Typography variant="h1" sx={{ fontSize: { xs: "3rem", md: "4rem" } }}>
+        Daily Electricity Statistics
+      </Typography>
       <DailyStatisticsList />
-    </Box>
+    </Container>
   );
 };
 

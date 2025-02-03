@@ -97,6 +97,7 @@ const DailyStatisticsList = () => {
   const table = useMaterialReactTable({
     columns: columns,
     data: data,
+    enableStickyHeader: true,
     enableGlobalFilter: false, //turn off built-in global filtering
     manualFiltering: true, //turn off built-in client-side filtering
     manualPagination: true, //turn off built-in client-side pagination
@@ -119,9 +120,15 @@ const DailyStatisticsList = () => {
     onColumnFiltersChange: setColumnFilters,
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
+
     muiToolbarAlertBannerProps: isError
       ? { color: "error", children: "Error loading data: " + error.message }
       : undefined,
+    muiTableContainerProps: {
+      sx: {
+        maxHeight: "70vh",
+      },
+    },
   });
 
   return (
