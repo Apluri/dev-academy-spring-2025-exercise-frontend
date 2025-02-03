@@ -3,8 +3,11 @@ import {
   MRT_PaginationState,
   MRT_SortingState,
 } from "material-react-table";
-import { DailyElectricityData } from "../types/electricityData";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import {
+  DailyElectricityData,
+  DailyElectricityDataSchema,
+} from "../types/electricityData";
 
 export const BASE_URL = "http://localhost:3000/";
 
@@ -27,23 +30,10 @@ export const useGetDailyElectricityData = (
       fetchURL.searchParams.set("sorting", JSON.stringify(sorting ?? []));
 
       const response = await fetch(fetchURL.href);
-      const json: DailyElectricityData = await response.json();
+      const json = await response.json();
+      const convertedData: DailyElectricityData =
+        DailyElectricityDataSchema.parse(json);
 
-      const convertedData: DailyElectricityData = {
-        data: json.data.map((data) => {
-          return {
-            ...data,
-            date: (() => {
-              if (data.date) {
-                return new Date(data.date);
-              } else {
-                throw new Error("Date is required");
-              }
-            })(),
-          };
-        }),
-        meta: json.meta,
-      };
       return convertedData;
     },
     placeholderData: keepPreviousData, //don't go to 0 rows when refetching or paginating to next page

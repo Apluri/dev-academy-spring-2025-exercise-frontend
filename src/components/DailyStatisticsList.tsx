@@ -55,6 +55,9 @@ const DailyStatisticsList = ({}: Props) => {
         header: "Average price",
         accessorKey: "averagePrice",
         filterVariant: "range",
+        Cell: ({ cell }) => {
+          return cell.getValue<number>() ? cell.getValue<number>() : undefined;
+        },
       },
       {
         header: "Longest negative price streak (hours)",

@@ -1,30 +1,27 @@
-import { MetaData } from "./dataQueries";
+import { z } from "zod";
+import { stringOrNullToNumber } from "../helpers/dataParsing";
+import { MetaDataSchema } from "./dataQueries";
 
-// Models
-export type ElectricityData = {
-  id: number;
-  date?: Date;
-  starttime?: Date;
-  productionamount?: number;
-  consumptionamount?: number;
-  hourlyprice?: number;
-};
+// Types
+export type DailyElectricityStatistics = z.infer<
+  typeof DailyElectricityStatisticsSchema
+>;
 
-export type DailyElectricityStatistics = {
-  date: Date;
-  totalConsumption: number;
-  totalProduction: number;
-  averagePrice: number;
-  longestNegativePriceStreak: number;
-};
+export type DailyElectricityData = z.infer<typeof DailyElectricityDataSchema>;
 
-// DataTransferObjects
-export type RawElectricityData = {
-  data: ElectricityData[];
-  meta: MetaData;
-};
+// Schemas
+export const DailyElectricityStatisticsSchema = z.object({
+  date: z
+    .string()
+    .transform((str) => new Date(str))
+    .optional(),
+  totalConsumption: stringOrNullToNumber.optional(),
+  totalProduction: stringOrNullToNumber.optional(),
+  averagePrice: stringOrNullToNumber.optional(),
+  longestNegativePriceStreak: stringOrNullToNumber.optional(),
+});
 
-export type DailyElectricityData = {
-  data: DailyElectricityStatistics[];
-  meta: MetaData;
-};
+export const DailyElectricityDataSchema = z.object({
+  data: z.array(DailyElectricityStatisticsSchema),
+  meta: MetaDataSchema,
+});
