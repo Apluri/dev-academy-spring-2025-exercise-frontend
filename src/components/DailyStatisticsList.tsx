@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { DailyElectricityData, ElectricityData } from "../models/electricity";
+import { DailyElectricityData } from "../types/electricityData";
 import {
   MaterialReactTable,
   MRT_ColumnDef,
