@@ -7,8 +7,8 @@ type Props = {
 };
 
 const StatisticsCell = ({ unitType, value, digits }: Props) => {
-  if (value === undefined) return undefined;
   const theme = useTheme();
+  if (value === undefined) return undefined;
 
   return (
     <Typography fontSize={theme.typography.fontSize}>{`${value.toFixed(
