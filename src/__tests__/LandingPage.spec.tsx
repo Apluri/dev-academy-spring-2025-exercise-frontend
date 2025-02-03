@@ -9,7 +9,7 @@ import "@testing-library/jest-dom";
 const queryClient = new QueryClient();
 
 describe("LandingPage", () => {
-  it("should render the h1 element", () => {
+  it("should render the landing page header", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -17,7 +17,8 @@ describe("LandingPage", () => {
         </LocalizationProvider>
       </QueryClientProvider>
     );
-    const headingElement = screen.getByRole("heading", { level: 1 });
-    expect(headingElement).toBeInTheDocument();
+
+    const headerText = screen.getByText(/Daily Electricity Statistics/);
+    expect(headerText).toBeInTheDocument();
   });
 });
