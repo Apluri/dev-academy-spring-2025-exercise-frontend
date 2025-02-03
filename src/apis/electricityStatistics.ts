@@ -8,7 +8,13 @@ import {
   DailyElectricityData,
   DailyElectricityDataSchema,
 } from "../types/electricityData";
-import { BASE_URL, routes } from "../routes/routes";
+
+const BASE_URL = import.meta.env.VITE_ELECTRICITY_API_BASE_URL;
+
+const routes = {
+  dailyStatistics: "/api/statistics/daily",
+  // Add more routes here
+};
 
 export const useGetDailyElectricityData = (
   columnFilters: MRT_ColumnFiltersState,
@@ -35,6 +41,6 @@ export const useGetDailyElectricityData = (
 
       return parsedData;
     },
-    placeholderData: keepPreviousData, //don't go to 0 rows when refetching or paginating to next page
+    placeholderData: keepPreviousData, // Display the previous data while fetching new data
   });
 };
