@@ -11,10 +11,10 @@ import {
 import { useMemo, useState } from "react";
 import { useGetDailyElectricityData } from "../apis/electricityStatistics";
 import StatisticsCell from "./StatisticsCell";
-type Props = {};
 
-const DailyStatisticsList = ({}: Props) => {
-  //manage our own state for stuff we want to pass to the API
+const DailyStatisticsList = () => {
+  // manage our own state for stuff we want to pass to the API
+  // TODO should validate the user inputs.
   const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>(
     []
   );
@@ -105,6 +105,9 @@ const DailyStatisticsList = ({}: Props) => {
       showColumnFilters: true,
     },
     state: {
+      // NOTE columnFilters: https://github.com/KevinVandy/material-react-table/issues/386
+      // columnFilters are undefined when hotreloading application. Does not affect the built version
+      // causes browser to provide a warning of "Warning: A component is changing an uncontrolled input of type undefined to be controlled."
       columnFilters,
       pagination,
       sorting,
