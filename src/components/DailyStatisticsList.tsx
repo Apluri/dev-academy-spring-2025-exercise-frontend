@@ -10,6 +10,7 @@ import {
 } from "material-react-table";
 import { useMemo, useState } from "react";
 import { useGetDailyElectricityData } from "../apis/electricityStatistics";
+import StatisticsCell from "./StatisticsCell";
 type Props = {};
 
 const DailyStatisticsList = ({}: Props) => {
@@ -45,24 +46,49 @@ const DailyStatisticsList = ({}: Props) => {
         header: "Total consumption",
         accessorKey: "totalConsumption",
         filterVariant: "range",
+        Cell: ({ cell }) => (
+          <StatisticsCell
+            unitType="kWh"
+            value={cell.getValue<number>()}
+            digits={0}
+          />
+        ),
       },
       {
         header: "Total production",
         accessorKey: "totalProduction",
         filterVariant: "range",
+        Cell: ({ cell }) => (
+          <StatisticsCell
+            unitType="mWh"
+            value={cell.getValue<number>()}
+            digits={0}
+          />
+        ),
       },
       {
         header: "Average price",
         accessorKey: "averagePrice",
         filterVariant: "range",
-        Cell: ({ cell }) => {
-          return cell.getValue<number>() ? cell.getValue<number>() : undefined;
-        },
+        Cell: ({ cell }) => (
+          <StatisticsCell
+            unitType="c/kWh"
+            value={cell.getValue<number>()}
+            digits={2}
+          />
+        ),
       },
       {
-        header: "Longest negative price streak (hours)",
+        header: "Longest negative price streak",
         accessorKey: "longestNegativePriceStreak",
         filterVariant: "range",
+        Cell: ({ cell }) => (
+          <StatisticsCell
+            unitType="hours"
+            value={cell.getValue<number>()}
+            digits={0}
+          />
+        ),
       },
     ],
     []
