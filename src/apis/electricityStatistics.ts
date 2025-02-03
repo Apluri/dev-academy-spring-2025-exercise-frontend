@@ -3,7 +3,7 @@ import {
   MRT_PaginationState,
   MRT_SortingState,
 } from "material-react-table";
-import { DailyElectricityDataDTO } from "../types/electricityData";
+import { DailyElectricityData } from "../types/electricityData";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 export const BASE_URL = "http://localhost:3000/";
@@ -13,7 +13,7 @@ export const useGetDailyElectricityData = (
   pagination: MRT_PaginationState,
   sorting: MRT_SortingState
 ) => {
-  return useQuery<DailyElectricityDataDTO>({
+  return useQuery<DailyElectricityData>({
     queryKey: ["electricityData", { columnFilters, pagination, sorting }],
     queryFn: async () => {
       const fetchURL = new URL("/api/statistics/daily", BASE_URL);
@@ -27,9 +27,9 @@ export const useGetDailyElectricityData = (
       fetchURL.searchParams.set("sorting", JSON.stringify(sorting ?? []));
 
       const response = await fetch(fetchURL.href);
-      const json: DailyElectricityDataDTO = await response.json();
+      const json: DailyElectricityData = await response.json();
 
-      const convertedData: DailyElectricityDataDTO = {
+      const convertedData: DailyElectricityData = {
         data: json.data.map((data) => {
           return {
             ...data,

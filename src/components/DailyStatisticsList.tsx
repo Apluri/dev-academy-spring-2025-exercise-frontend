@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { DailyElectricityData } from "../types/electricityData";
+import { DailyElectricityStatistics } from "../types/electricityData";
 import {
   MaterialReactTable,
   MRT_ColumnDef,
@@ -31,7 +31,7 @@ const DailyStatisticsList = ({}: Props) => {
     error,
   } = useGetDailyElectricityData(columnFilters, pagination, sorting);
 
-  const columns = useMemo<MRT_ColumnDef<DailyElectricityData>[]>(
+  const columns = useMemo<MRT_ColumnDef<DailyElectricityStatistics>[]>(
     () => [
       {
         header: "Date",
