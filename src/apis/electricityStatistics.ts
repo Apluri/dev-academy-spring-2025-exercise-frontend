@@ -8,8 +8,7 @@ import {
   DailyElectricityData,
   DailyElectricityDataSchema,
 } from "../types/electricityData";
-
-export const BASE_URL = "http://localhost:3000/";
+import { BASE_URL, routes } from "../routes/routes";
 
 export const useGetDailyElectricityData = (
   columnFilters: MRT_ColumnFiltersState,
@@ -19,7 +18,7 @@ export const useGetDailyElectricityData = (
   return useQuery<DailyElectricityData>({
     queryKey: ["electricityData", { columnFilters, pagination, sorting }],
     queryFn: async () => {
-      const fetchURL = new URL("/api/statistics/daily", BASE_URL);
+      const fetchURL = new URL(routes.dailyStatistics, BASE_URL);
 
       fetchURL.searchParams.set(
         "pageStart",
