@@ -58,11 +58,24 @@ Frontend runs on http://localhost:5173/
 
 ## How to run tests & code analyzers
 
-### Tests against local server
+### Unit tests
 
 ```bash
 npm run test
 ```
+
+### E2E tests
+
+#### Testing against locally running backend
+
+1. Start dockerized backend
+2. Start frontend with `npm run dev` command
+3. Run E2E tests with `npm run cypress:run`
+
+#### Testing against prod backend running in the cloud
+
+1. Start frontend with `npm run prod` command
+2. Run E2E tests with `npm run cypress:run`
 
 ### Run linter
 
@@ -95,12 +108,13 @@ The frontend is a static React application hosted in Amazon S3, with Amazon Clou
 ### Tech / Frameworks used
 
 - React + Vite + TypeScript
-- Vitest (Testing)
+- Vitest (Unit testing)
+- Cypress (E2E testing)
 - Material UI (UI components)
 - Material React Table (Table UI)
 - TanStack Query (Auto refetching & caching)
 - Zod (Schema validation)
-- Github Actions (Automated test & lint check)
+- Github Actions (Automated tests & lint check)
 
 ### Application features
 

@@ -28,6 +28,13 @@ jobs:
       - name: Run eslint
         run: npm run lint
 
-      # Run tests
-      - name: Run tests
+      # Run unit tests
+      - name: Run unit tests
         run: npm run test
+
+      # Run e2e tests using Cypress
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v4
+        with:
+          start: npm run prod
+          wait-on: http://localhost:5173
