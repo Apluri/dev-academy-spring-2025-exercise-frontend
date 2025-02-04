@@ -14,8 +14,8 @@ describe("Data table flow", () => {
 
   it("should filter correctly with date", () => {
     cy.contains("th", "Date").within(() => {
-      cy.get('input[placeholder="Min"]').type("02/01/2021");
-      cy.get('input[placeholder="Max"]').type("02/01/2021");
+      cy.get('input[placeholder="Min"]').type("01/02/2021");
+      cy.get('input[placeholder="Max"]').type("01/02/2021");
     });
     // Should have only one item
     cy.get("tbody tr").should("have.length", 1);
