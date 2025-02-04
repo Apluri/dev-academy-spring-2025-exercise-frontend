@@ -8,6 +8,7 @@ import {
   DailyElectricityData,
   DailyElectricityDataSchema,
 } from "../types/electricityData";
+import { formatDateValuesToUTC } from "../helpers/dataParsing";
 
 const BASE_URL = import.meta.env.VITE_ELECTRICITY_API_BASE_URL;
 
@@ -30,10 +31,17 @@ export const useGetDailyElectricityData = (
         "pageStart",
         `${pagination.pageIndex * pagination.pageSize}`
       );
-      fetchURL.searchParams.set("pageSize", `${pagination.pageSize}`);
-      fetchURL.searchParams.set("filters", JSON.stringify(columnFilters ?? []));
-      fetchURL.searchParams.set("sorting", JSON.stringify(sorting ?? []));
 
+      fetchURL.searchParams.set(
+        "pageStart",
+        `${pagination.pageIndex * pagination.pageSize}`
+      );
+      fetchURL.searchParams.set("pageSize", `${pagination.pageSize}`);
+      fetchURL.searchParams.set(
+        "filters",
+        JSON.stringify(formatDateValuesToUTC(columnFilters ?? []))
+      );
+      fetchURL.searchParams.set("sorting", JSON.stringify(sorting ?? []));
       const response = await fetch(fetchURL.href);
       const json = await response.json();
       const parsedData: DailyElectricityData =

@@ -32,6 +32,14 @@ const DailyStatisticsList = () => {
     error,
   } = useGetDailyElectricityData(columnFilters, pagination, sorting);
 
+  const handleSetFilters = (
+    updaterOrValue:
+      | MRT_ColumnFiltersState
+      | ((old: MRT_ColumnFiltersState) => MRT_ColumnFiltersState)
+  ) => {
+    setColumnFilters(updaterOrValue);
+  };
+
   const columns = useMemo<MRT_ColumnDef<DailyElectricityStatistics>[]>(
     () => [
       {
@@ -117,10 +125,9 @@ const DailyStatisticsList = () => {
       showProgressBars: isRefetching,
     },
     rowCount: meta.totalRowCount,
-    onColumnFiltersChange: setColumnFilters,
+    onColumnFiltersChange: handleSetFilters,
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
-
     muiToolbarAlertBannerProps: isError
       ? { color: "error", children: "Error loading data: " + error.message }
       : undefined,
