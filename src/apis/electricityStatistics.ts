@@ -43,6 +43,12 @@ export const useGetDailyElectricityData = (
       );
       fetchURL.searchParams.set("sorting", JSON.stringify(sorting ?? []));
       const response = await fetch(fetchURL.href);
+
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(errorMessage);
+      }
+
       const json = await response.json();
       const parsedData: DailyElectricityData =
         DailyElectricityDataSchema.parse(json);
