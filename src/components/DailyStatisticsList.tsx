@@ -128,6 +128,15 @@ const DailyStatisticsList = () => {
         maxHeight: "70vh",
       },
     },
+    muiTableHeadProps: {
+      sx: {
+        "& .MuiTableCell-root": {
+          // Alings the header cells in a way that they always match the largest content style (ex. when one header has wrapping text)
+          verticalAlign: "bottom",
+          pb: 2,
+        },
+      },
+    },
   });
 
   return (
