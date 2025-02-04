@@ -121,7 +121,7 @@ const DailyStatisticsList = () => {
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
     muiToolbarAlertBannerProps: isError
-      ? { color: "error", children: "Error loading data: " + error.message }
+      ? { color: "error", children: "Error while data: " + error.message }
       : undefined,
     muiTableContainerProps: {
       sx: {
