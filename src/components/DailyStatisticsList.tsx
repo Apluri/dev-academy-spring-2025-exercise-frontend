@@ -125,7 +125,7 @@ const DailyStatisticsList = () => {
       : undefined,
     muiTableContainerProps: {
       sx: {
-        maxHeight: "70vh",
+        maxHeight: { xs: "60vh", md: "80vh" },
       },
     },
     muiTableHeadProps: {
