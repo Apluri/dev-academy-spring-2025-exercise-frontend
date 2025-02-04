@@ -41,6 +41,9 @@ const DailyStatisticsList = () => {
         Cell: ({ cell }) => {
           return cell.getValue<Date | undefined>()?.toLocaleDateString();
         },
+        muiFilterDatePickerProps: {
+          format: "dd/MM/yyyy",
+        },
       },
       {
         header: "Total consumption",
