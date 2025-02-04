@@ -1,56 +1,130 @@
-# React + TypeScript + Vite
+# Solita dev academy excercise
 
-- npm install
-- npm run dev
+## Project Description
 
-.env add this
-VITE_ELECTRICITY_API_BASE_URL=http://localhost:3000/
+This project is a single-page application that displays daily electricity statistics in a table format. The application features server-side filtering, pagination, and sorting, with local caching provided by TanStack Query.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Online preview
 
-Currently, two official plugins are available:
+Important! HTTPS protocol is not supported, so be sure to edit the URL back to HTTP if your browser automatically changes it to HTTPS.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+👉 http://d3ahpr97y5mrhf.cloudfront.net/
 
-## Expanding the ESLint configuration
+## Run Locally
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Requirements
 
-- Configure the top-level `parserOptions` property like this:
+You need to have Node.js 18+ or 20+ installed and be able to run npm commands. Some dependencies may require a higher Node.js version—please upgrade if your package manager warns about compatibility issues.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+### Clone repository
+
+Open terminal in your preferred location.
+
+```bash
+git clone https://github.com/Apluri/dev-academy-spring-2025-exercise-frontend.git
+cd dev-academy-spring-2025-exercise-frontend
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Install dependencies
 
-```js
-// eslint.config.js
-import react from "eslint-plugin-react";
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: "18.3" } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs["jsx-runtime"].rules,
-  },
-});
+```bash
+npm install
 ```
+
+## How to run application
+
+### Against local server
+
+Follow [backend instructions](https://github.com/Apluri/dev-academy-spring-2025-exercise-backend) to ensure the API is running.
+
+Start the frontend development server:
+
+```bash
+npm run dev
+```
+
+Frontend runs at http://localhost:5173/
+
+### Against production server
+
+Runs the frontend locally with production settings, using the hosted backend.
+
+```bash
+npm run prod
+```
+
+Frontend runs on http://localhost:5173/
+
+## How to run tests & code analyzers
+
+### Tests against local server
+
+```bash
+npm run test
+```
+
+### Run linter
+
+```bash
+npm run lint
+```
+
+## How to build the production package
+
+### Build package
+
+```bash
+npm run build
+```
+
+### Preview built package
+
+Runs at http://localhost:4173/
+
+```bash
+npm run preview
+```
+
+## Features
+
+### Host info
+
+The frontend is a static React application hosted in Amazon S3, with Amazon CloudFront as a CDN.
+
+### Tech / Frameworks used
+
+- React + Vite + TypeScript
+- Vitest (Testing)
+- Material UI (UI components)
+- Material React Table (Table UI)
+- TanStack Query (Auto refetching & caching)
+- Zod (Schema validation)
+- Github Actions (Automated test & lint check)
+
+### Application features
+
+The application consists of a single-page interface featuring a data table that displays daily electricity statistics.
+
+Table Displays:
+
+- Date
+- Total electricity consumption
+- Total electricity production
+- Average electricity price
+- Longest negative price streak (in hours)
+
+Table Functionality:
+
+- Server-side processing:
+
+  - Filtering
+  - Pagination
+    -Sorting
+
+- Client-side caching:
+
+  - Managed with TanStack Query, using query keys
+
+  ### Application Preview
+
+  ![Application Preview](assets/app-preview.png)
