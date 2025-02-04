@@ -1,4 +1,4 @@
-# Solita dev academy excercise
+# Dev Academy Spring 2025 Exercise Frontend
 
 ## Project Description
 
@@ -6,7 +6,8 @@ This project is a single-page application that displays daily electricity statis
 
 ## Online preview
 
-Important! HTTPS protocol is not supported, so be sure to edit the URL back to HTTP if your browser automatically changes it to HTTPS.
+> [!WARNING]
+> Note: The application currently runs over HTTP, and HTTPS is not supported. Some browsers may automatically redirect to HTTPS, so ensure you manually change it back to HTTP if necessary.
 
 👉 http://d3ahpr97y5mrhf.cloudfront.net/
 
