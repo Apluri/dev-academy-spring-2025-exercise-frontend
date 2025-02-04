@@ -18,7 +18,12 @@ const DailyStatisticsList = () => {
   const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>(
     []
   );
-  const [sorting, setSorting] = useState<MRT_SortingState>([]);
+  const [sorting, setSorting] = useState<MRT_SortingState>([
+    {
+      id: "date",
+      desc: true,
+    },
+  ]);
   const [pagination, setPagination] = useState<MRT_PaginationState>({
     pageIndex: 0,
     pageSize: 10,
@@ -40,6 +45,9 @@ const DailyStatisticsList = () => {
         filterVariant: "date-range",
         Cell: ({ cell }) => {
           return cell.getValue<Date | undefined>()?.toLocaleDateString();
+        },
+        muiFilterDatePickerProps: {
+          format: "dd/MM/yyyy",
         },
       },
       {
